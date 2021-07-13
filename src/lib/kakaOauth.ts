@@ -19,7 +19,7 @@ export const requestKakaoToken = (code: string) => fetch(
     const result = await res.json()
     const user = await getKakaoTokenByUserInfo(result.access_token)
     if (user.id) {
-        redis.setex(result.access_token, 43199, user.id)
+        await redis.setex(result.access_token, 43199, user.id)
     }
     return result
 })

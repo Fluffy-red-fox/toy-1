@@ -13,6 +13,6 @@ export const permissions = shield({
 
     },
     Mutation: {
-
+        logout: isValid
     }
 })

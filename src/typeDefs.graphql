@@ -10,6 +10,8 @@ type Mutation{
     kakaoAuth(code: String!): Auth!
 
     refreshAuth(refreshToken: String!): Auth!
+
+    logout(token: String!): Boolean!
 }
 
 type Auth{

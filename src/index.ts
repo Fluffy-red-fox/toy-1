@@ -42,7 +42,7 @@ const start = async () => {
         context: async ({ req }) => {
             const uId = req.headers.authorization || ''
             const uName = await redis.get(uId)
-            return { db, uId, uName }
+            return { db, uId, redis, uName }
         },
         validationRules: [
             depthLimit(8)
