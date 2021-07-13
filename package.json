@@ -8,7 +8,8 @@
     "build": "tsc -p .",
     "start": "NODE_PATH=src/ nodemon --exec ts-node src/index.ts",
     "on": "NODE_PATH=dist/ node dist/index.js",
-    "gen-docs": "rm -rf docs && graphdoc -s ./src/typeDefs.graphql -o ./docs"
+    "gen-docs": "rm -rf docs && graphdoc -s ./src/typeDefs.graphql -o ./docs",
+    "deploy": "ts-node deploy.ts"
   },
   "repository": {
     "type": "git",
