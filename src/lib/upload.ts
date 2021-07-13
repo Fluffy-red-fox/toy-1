@@ -21,13 +21,7 @@ export const uploadS3 = async (fileStream: ReadStream, Key: string, ContentType:
         ACL: "public-read",
         ContentType
     }
-    try {
-        await S3.upload(params).promise()
-        return true
-    } catch (e) {
-        console.log(e)
-        return false
-    }
+    await S3.upload(params).promise()
 }
 
 

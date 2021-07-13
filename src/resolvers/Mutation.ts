@@ -1,6 +1,6 @@
-import { Mutation as upload } from "resolvers/upload"
 import { Mutation as auth } from "resolvers/app/auth"
+import { Mutation as share } from "resolvers/app/share"
 export default {
-    ...upload,
-    ...auth
+    ...auth,
+    ...share
 }

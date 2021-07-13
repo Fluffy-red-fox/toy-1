@@ -5,7 +5,7 @@ type Query{
 }
 
 type Mutation{
-    imgUpload(file: Upload!): Boolean!
+    uploadImage(image: Upload!): String!
 
     kakaoAuth(code: String!): Auth!
 
