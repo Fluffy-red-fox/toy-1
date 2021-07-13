@@ -1,7 +1,4 @@
-# 파일 업로드 타입
 scalar Upload
-# 포스트 아이디 타입
-scalar ObjectID
 
 # R
 type Query{
@@ -40,7 +37,7 @@ type Mutation{
         #간단한 설명
         comment: String!,
         #이미지 URI
-        imageURI: String!
+        imageURI: URL!
     ): Post!
 }
 

@@ -1,4 +1,4 @@
 export interface PostArgs {
     comment: string
-    imageURI: string
+    imageURI: URL
 }

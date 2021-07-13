@@ -39,6 +39,7 @@ export const createPost = async (
         uName: string
     }
 ) => db.collection("post").insertOne({
-    ...args,
+    comment: args.comment,
+    imageURI: args.imageURI.href,
     uName
 }).then(({ ops }) => ops[0])

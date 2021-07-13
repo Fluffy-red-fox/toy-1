@@ -1,8 +1,9 @@
 import dotenv from "dotenv"
 dotenv.config()
+import env from "config/env"
 
 import { express as voyagerMiddleware } from "graphql-voyager/middleware"
-import { ApolloServer, ApolloError } from "apollo-server-express"
+import { ApolloServer, GraphQLUpload } from "apollo-server-express"
 import { readFileSync } from "fs"
 import { createServer } from "http"
 import depthLimit from "graphql-depth-limit"
@@ -12,20 +13,35 @@ import { permissions } from "lib"
 
 import { makeExecutableSchema } from "@graphql-tools/schema"
 import { applyMiddleware } from "graphql-middleware"
+import * as graphqlScalars from 'graphql-scalars'
 
 import express from "express"
+import expressPlayground from "graphql-playground-middleware-express"
 import { bodyParserGraphQL } from "body-parser-graphql"
 import resolvers from "resolvers"
-const typeDefs = readFileSync("src/typeDefs.graphql", "utf-8")
+const typeDefsGraphQL = readFileSync("src/typeDefs.graphql", "utf-8")
 
 const app = express()
 app.use(bodyParserGraphQL())
+app.use("/voyager", voyagerMiddleware({ endpointUrl: "/api" }))
+app.use("/graphql", expressPlayground({ endpoint: "/api" }))
+app.use("/api-docs", express.static("docs"))
 
-const schema = makeExecutableSchema({
-    typeDefs,
-    resolvers
+app.get("/kakao-login", (req, res) => {
+    res.redirect(`https://kauth.kakao.com/oauth/authorize?client_id=${process.env.REST_KEY}&redirect_uri=${env.REDIRECT_URI}&response_type=code`)
 })
 
+const schema = makeExecutableSchema({
+    typeDefs: `
+        ${graphqlScalars.typeDefs.join('\n')}
+        ${typeDefsGraphQL}
+    `,
+    resolvers: {
+        ...resolvers,
+        Upload: GraphQLUpload as import("graphql").GraphQLScalarType,
+        ...graphqlScalars.resolvers
+    }
+})
 
 const server = new ApolloServer({
     schema: applyMiddleware(schema, permissions),
