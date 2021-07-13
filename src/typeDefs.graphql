@@ -1,4 +1,3 @@
-# Upload Type
 scalar Upload
 
 type Query{
@@ -6,7 +5,7 @@ type Query{
 }
 
 type Mutation{
-    imgUpload(file: FileUpload): Boolean!
+    imgUpload(file: Upload!): Boolean!
 
     kakaoAuth(code: String!): Auth!
 

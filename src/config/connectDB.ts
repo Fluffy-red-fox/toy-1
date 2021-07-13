@@ -23,7 +23,7 @@ const connectDB = () => {
 
     const get = async () => {
         try {
-            if (db != null) {
+            if (db !== null) {
                 return db
             } else {
                 console.log(`getting new db connection`)

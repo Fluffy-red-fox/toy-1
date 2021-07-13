@@ -24,6 +24,7 @@
   },
   "homepage": "https://github.com/pukuba/graphql-ts-boilerplate#readme",
   "dependencies": {
+    "@graphql-tools/schema": "^7.1.5",
     "@types/mime-types": "^2.1.0",
     "@types/redis": "^2.8.31",
     "@types/supertest": "^2.0.11",
@@ -33,6 +34,7 @@
     "express": "^4.17.1",
     "fs": "0.0.1-security",
     "graphql-depth-limit": "^1.1.0",
+    "graphql-middleware": "^6.0.10",
     "graphql-playground-middleware-express": "^1.7.22",
     "graphql-query-complexity": "^0.7.2",
     "graphql-shield": "^7.5.0",

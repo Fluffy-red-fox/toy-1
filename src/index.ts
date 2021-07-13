@@ -9,6 +9,10 @@ import { createServer } from "http"
 import depthLimit from "graphql-depth-limit"
 import DB from "config/connectDB"
 import * as redis from "config/connectRedis"
+import { permissions } from "lib"
+
+import { makeExecutableSchema } from "@graphql-tools/schema"
+import { applyMiddleware } from "graphql-middleware"
 
 import express from "express"
 import expressPlayground from "graphql-playground-middleware-express"
@@ -22,11 +26,15 @@ app.use("/voyager", voyagerMiddleware({ endpointUrl: "/api" }))
 app.use("/graphql", expressPlayground({ endpoint: "/api" }))
 app.use("/api-docs", express.static("docs"))
 
+const schema = makeExecutableSchema({
+    typeDefs,
+    resolvers
+})
+
 const start = async () => {
     const db = await DB.get()
     const server = new ApolloServer({
-        typeDefs,
-        resolvers,
+        schema: applyMiddleware(schema, permissions),
         context: async ({ req }) => {
             const uId = req.headers.authorization || ''
             const uName = await redis.get(uId)

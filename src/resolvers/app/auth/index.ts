@@ -1,1 +1,1 @@
-export * as Mutation from "resolvers/app/auth"
+export * as Mutation from "resolvers/app/auth/Mutation"
