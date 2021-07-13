@@ -1,7 +1,7 @@
 import { uploadS3, isValidImage } from "lib"
 import { File } from "config/types"
 import { Db } from "mongodb"
-import { join } from "path"
+import { PostArgs } from "resolvers/app/share/models"
 import { ApolloError } from "apollo-server-express"
 import env from "config/env"
 
@@ -28,3 +28,17 @@ export const uploadImage = async (
         return false
     }
 }
+
+export const createPost = async (
+    parent: void,
+    args: PostArgs, {
+        db,
+        uName
+    }: {
+        db: Db,
+        uName: string
+    }
+) => db.collection("post").insertOne({
+    ...args,
+    uName
+}).then(({ ops }) => ops[0])
