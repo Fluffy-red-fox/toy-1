@@ -15,7 +15,7 @@ type Mutation{
     uploadImage(
         #.jpg .jpeg .png 파일
         image: Upload!
-    ): String!
+    ): URL!
 
     # 카카오 OAuth code로 token 가져오기
     kakaoAuth(
