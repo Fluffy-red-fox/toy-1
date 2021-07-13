@@ -1,11 +1,17 @@
 import dotenv from "dotenv"
 dotenv.config()
-import env from "config/env"
 
+import { express as voyagerMiddleware } from "graphql-voyager/middleware"
 import { ApolloServer, ApolloError } from "apollo-server-express"
 import { readFileSync } from "fs"
 import { createServer } from "http"
+import depthLimit from "graphql-depth-limit"
 import DB from "config/connectDB"
+import * as redis from "config/connectRedis"
+import { permissions } from "lib"
+
+import { makeExecutableSchema } from "@graphql-tools/schema"
+import { applyMiddleware } from "graphql-middleware"
 
 import express from "express"
 import { bodyParserGraphQL } from "body-parser-graphql"
@@ -15,13 +21,23 @@ const typeDefs = readFileSync("src/typeDefs.graphql", "utf-8")
 const app = express()
 app.use(bodyParserGraphQL())
 
-const server = new ApolloServer({
+const schema = makeExecutableSchema({
     typeDefs,
-    resolvers,
-    context: async () => {
+    resolvers
+})
+
+
+const server = new ApolloServer({
+    schema: applyMiddleware(schema, permissions),
+    context: async ({ req }) => {
         const db = await DB.get()
-        return { db }
-    }
+        const uId = req.headers.authorization || ''
+        const uName = await redis.get(uId)
+        return { db, uId, uName }
+    },
+    validationRules: [
+        depthLimit(8)
+    ]
 })
 
 server.applyMiddleware({
@@ -31,5 +47,4 @@ server.applyMiddleware({
 
 const httpServer = createServer(app)
 httpServer.timeout = 5000
-
 export default httpServer

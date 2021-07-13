@@ -49,7 +49,7 @@ describe(`Server Init Test`, () => {
 
     it(`Server Running Test-3`, async () => {
         const { body } = await graphql(`
-            mutation($file: FileUpload){
+            mutation($file: Upload!){
                 imgUpload(file: $file)
             }
         `, { file: __dirname + '/github_profile.jpeg' })

@@ -26,6 +26,10 @@ app.use("/voyager", voyagerMiddleware({ endpointUrl: "/api" }))
 app.use("/graphql", expressPlayground({ endpoint: "/api" }))
 app.use("/api-docs", express.static("docs"))
 
+app.get("/kakao-login", (req, res) => {
+    res.redirect(`https://kauth.kakao.com/oauth/authorize?client_id=${process.env.REST_KEY}&redirect_uri=${env.REDIRECT_URI}&response_type=code`)
+})
+
 const schema = makeExecutableSchema({
     typeDefs,
     resolvers
