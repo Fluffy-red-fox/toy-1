@@ -45,14 +45,14 @@
                 Boolean
             </a>
         </li>
-        <li  title="FileUpload">
-            <a href="fileupload.doc.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">
-                FileUpload
-            </a>
-        </li>
         <li  title="String">
             <a href="string.doc.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">
                 String
+            </a>
+        </li>
+        <li  title="Upload">
+            <a href="upload.doc.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">
+                Upload
             </a>
         </li>
     </ul>
@@ -75,6 +75,11 @@
 <div class="slds-grid slds-grid--vertical slds-navigation-list--vertical">
     <h4 class="slds-text-title--caps slds-p-around--medium">Objects</h4>
     <ul>
+        <li  title="Auth">
+            <a href="auth.doc.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">
+                Auth
+            </a>
+        </li>
         <li  title="__Directive">
             <a href="directive.spec.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">
                 __Directive
@@ -153,7 +158,7 @@
             </a>
             GraphQL Schema definition
         </h2>
-        <code class="highlight"><ul class="code" style="padding-left:28px"><li><span class="keyword operator ts">type</span> <span class="identifier">Mutation</span> {</li><li></li><li><span class="tab"><span class="comment line"># Arguments</span></span></li><li><span class="tab"><span class="comment line">#   <strong>file</strong>: </span></span></li><li><span class="tab"><span class="meta">imgUpload</span>(<span class="meta">file</span>: <a class="support type" href="fileupload.doc.html">FileUpload</a>): <a class="support type" href="boolean.doc.html">Boolean</a>! </span></li><li>}</li></ul></code>
+        <code class="highlight"><ul class="code" style="padding-left:42px"><li><span class="keyword operator ts">type</span> <span class="identifier">Mutation</span> {</li><li></li><li><span class="tab"><span class="comment line"># Arguments</span></span></li><li><span class="tab"><span class="comment line">#   <strong>file</strong>: </span></span></li><li><span class="tab"><span class="meta">imgUpload</span>(<span class="meta">file</span>: <a class="support type" href="upload.doc.html">Upload</a>!): <a class="support type" href="boolean.doc.html">Boolean</a>! </span></li><li></li><li><span class="tab"><span class="comment line"># Arguments</span></span></li><li><span class="tab"><span class="comment line">#   <strong>code</strong>: </span></span></li><li><span class="tab"><span class="meta">kakaoAuth</span>(<span class="meta">code</span>: <a class="support type" href="string.doc.html">String</a>!): <a class="support type" href="auth.doc.html">Auth</a>! </span></li><li></li><li><span class="tab"><span class="comment line"># Arguments</span></span></li><li><span class="tab"><span class="comment line">#   <strong>refreshToken</strong>: </span></span></li><li><span class="tab"><span class="meta">refreshAuth</span>(<span class="meta">refreshToken</span>: <a class="support type" href="string.doc.html">String</a>!): <a class="support type" href="auth.doc.html">Auth</a>! </span></li><li>}</li></ul></code>
     </div>
 </section>
 <section>
