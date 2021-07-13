@@ -1,7 +1,10 @@
 scalar Upload
+scalar ObjectID
 
 type Query{
     test: String!
+
+    getMyPosts: [Post!]!
 }
 
 type Mutation{
@@ -12,6 +15,17 @@ type Mutation{
     refreshAuth(refreshToken: String!): Auth!
 
     logout(token: String!): Boolean!
+
+    createPost(
+        comment: String!,
+        imageURI: String!
+    ): Post!
+}
+
+type Post{
+    postId: ObjectID!
+    comment: String!
+    imageURI: String!
 }
 
 type Auth{

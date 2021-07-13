@@ -10,9 +10,10 @@ const isValid = rule()((parent: void, args: void, { uName }: { uName: string | n
 
 export const permissions = shield({
     Query: {
-
+        getMyPosts: isValid
     },
     Mutation: {
-        logout: isValid
+        logout: isValid,
+        createPost: isValid
     }
 })
