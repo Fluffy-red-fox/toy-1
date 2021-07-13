@@ -1,18 +1,35 @@
 import { ReadStream, WriteStream } from "fs-capacitor"
-import { createWriteStream } from "fs"
 import env from "config/env"
+import AWS from "aws-sdk"
 
-export const uploadStream = (stream: ReadStream, path: string) =>
-    new Promise((resolve, reject) => {
-        const capacitor = new WriteStream()
-        const destination = createWriteStream(path)
-        stream.pipe(capacitor)
-        capacitor
-            .createReadStream()
-            .pipe(destination)
-            .on('error', reject)
-            .on('finish', resolve)
-    })
+const region = env.AWS_REGION
+
+const S3 = new AWS.S3({
+    endpoint: new AWS.Endpoint(env.END_POINT as string),
+    region,
+    credentials: {
+        accessKeyId: env.ACCESS_KEY,
+        secretAccessKey: env.SECRET_KEY
+    }
+})
+const Bucket = env.AWS_BUCKET as string
+export const uploadS3 = async (fileStream: ReadStream, Key: string, ContentType: string) => {
+    const params = {
+        Bucket,
+        Key,
+        Body: fileStream,
+        ACL: "public-read",
+        ContentType
+    }
+    try {
+        await S3.upload(params).promise()
+        return true
+    } catch (e) {
+        console.log(e)
+        return false
+    }
+}
+
 
 const validImageExtensions = [".jpg", ".jpeg", ".png"]
 
