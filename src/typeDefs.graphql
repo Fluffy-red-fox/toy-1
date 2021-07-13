@@ -1,33 +1,60 @@
+# 파일 업로드 타입
 scalar Upload
+# 포스트 아이디 타입
 scalar ObjectID
 
+# R
 type Query{
     test: String!
 
+    # 내가 작성한 글 불러오기
     getMyPosts: [Post!]!
 }
 
+# CUD
 type Mutation{
-    uploadImage(image: Upload!): String!
 
-    kakaoAuth(code: String!): Auth!
+    # 이미지 업로드하기 URI가 반환됨
+    uploadImage(
+        #.jpg .jpeg .png 파일
+        image: Upload!
+    ): String!
 
-    refreshAuth(refreshToken: String!): Auth!
+    # 카카오 OAuth code로 token 가져오기
+    kakaoAuth(
+        code: String!
+    ): Auth!
 
-    logout(token: String!): Boolean!
+    # refresh token으로 access token 가져오기
+    refreshAuth(
+        refreshToken: String!
+    ): Auth!
 
+    # 해당 토큰 만료시키기
+    logout(
+        token: String!
+    ): Boolean!
+
+    # 게시글 작성하기
     createPost(
+        #간단한 설명
         comment: String!,
+        #이미지 URI
         imageURI: String!
     ): Post!
 }
 
+# 게시글 
 type Post{
+    # 게시글 고유 ID
     postId: ObjectID!
+    # 게시글 설명
     comment: String!
+    # 사진 주소
     imageURI: String!
 }
 
+# 인증정보
 type Auth{
     access_token: String!
     refresh_token: String
