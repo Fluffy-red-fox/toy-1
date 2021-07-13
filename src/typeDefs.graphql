@@ -1,5 +1,5 @@
-# FileUpload Type
-scalar FileUpload
+# Upload Type
+scalar Upload
 
 type Query{
     test: String!
@@ -7,4 +7,13 @@ type Query{
 
 type Mutation{
     imgUpload(file: FileUpload): Boolean!
+
+    kakaoAuth(code: String!): Auth!
+
+    refreshAuth(refreshToken: String!): Auth!
+}
+
+type Auth{
+    access_token: String!
+    refresh_token: String
 }

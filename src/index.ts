@@ -8,6 +8,7 @@ import { readFileSync } from "fs"
 import { createServer } from "http"
 import depthLimit from "graphql-depth-limit"
 import DB from "config/connectDB"
+import * as redis from "config/connectRedis"
 
 import express from "express"
 import expressPlayground from "graphql-playground-middleware-express"
@@ -26,8 +27,10 @@ const start = async () => {
     const server = new ApolloServer({
         typeDefs,
         resolvers,
-        context: () => {
-            return { db }
+        context: async ({ req }) => {
+            const uId = req.headers.authorization || ''
+            const uName = await redis.get(uId)
+            return { db, uId, uName }
         },
         validationRules: [
             depthLimit(8)

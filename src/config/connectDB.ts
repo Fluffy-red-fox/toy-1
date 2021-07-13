@@ -2,7 +2,6 @@ import env from "config/env"
 import { MongoClient, Db } from "mongodb"
 
 let db: Db | null = null
-let instance: number = 0
 const connectDB = () => {
 
     const connect = async () => {
@@ -24,8 +23,6 @@ const connectDB = () => {
 
     const get = async () => {
         try {
-            ++instance
-            console.log(`DB called ${instance} times`)
             if (db != null) {
                 return db
             } else {
