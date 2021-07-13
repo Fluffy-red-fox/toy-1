@@ -44,9 +44,10 @@ export const kakaoTokenRefresh = (refresh_token: string) => fetch("https://kauth
         client_secret: process.env.CLIENT_SECRET
     })
 }).then(async (res) => {
-    const user = await res.json()
+    const tokens = await res.json()
+    const user = await getKakaoTokenByUserInfo(tokens.access_token)
     if (user.id) {
-        redis.setex(user.access_token, 43199, user.id)
+        redis.setex(tokens.access_token, 43199, user.id)
     }
-    return user
+    return tokens
 })
